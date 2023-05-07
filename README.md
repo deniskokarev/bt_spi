@@ -2,28 +2,37 @@ Experiments with Host and BT controller boards over SPI
 ==============================================
 
 Install Zephyr as per [Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html)
+using virtual env.
 
 Install necessary dependencies, such as
 ```
 brew install stlink
 ```
-and nrf-command-line-tools-10.21.0-darwin from Nordic
+and [nrf-command-line-tools](https://www.nordicsemi.com/Products/Development-tools/nrf-command-line-tools/download)
 
 
-Set env by
+Set Zephyr dev env by
 ```
 source ./zephyr.env
 ```
 
 STM32 Nucleo F401R Host with STM X-NUCLEO IDB05A2
 ----------------------------------------------
-Supported
-...
 
+# Host with shield
+Build
+
+```
+west build -b nucleo_f401re -s $ZEPHYR_BASE/samples/bluetooth/peripheral_dis -d host_build -- -DBOARD_ROOT=$PWD -DSHIELD=x_nucleo_idb05a2 -DCONF_FILE=$PWD/peripheral_dis.prj.conf
+```
+
+Flash
+```
+west flash -d host_build
+```
 
 STM32 Nucleo F401R Host with nRF52840DK Controller
 ----------------------------------------------
-Supported
 
 # Host
 Build perepheral_dis host example
