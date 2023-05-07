@@ -64,6 +64,22 @@ Clean
 rm -rf host_build ctrl_build
 ```
 
+Pinout
+----------------------------------------------
+
+Pinout almost identical between host and controller
+
+STM Host
+```
+(A0)  PA0   EXTI		active Hi
+(A1)  PA1   SPI CS		active Lo
+(D12) PA6   MISO		active Hi
+(D11) PA7   MOSI		active Hi
+(D6)  PB10  RESET		active Lo
+(D3)  PB3   SPI-SCK		active Hi
+```
+
+Only nRF Controller has an extra wire from (D6) to P0.18 reset pin
 
 TODO
 ----------------------------------------------
