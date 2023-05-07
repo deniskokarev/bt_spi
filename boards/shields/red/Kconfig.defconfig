@@ -1,0 +1,20 @@
+# Copyright (c) 2019 Linaro Limited
+# SPDX-License-Identifier: Apache-2.0
+
+if BT
+
+config SPI
+	default y
+
+choice BT_HCI_BUS_TYPE
+	default BT_SPI
+endchoice
+
+# ? Disable Flow control
+config BT_HCI_ACL_FLOW_CONTROL
+	default n
+
+config BT_HCI_VS_EXT
+	default y
+
+endif # BT
