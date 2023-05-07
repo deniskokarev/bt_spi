@@ -7,6 +7,7 @@ using virtual env.
 Install necessary dependencies, such as
 ```
 brew install stlink
+brew install openocd
 ```
 and [nrf-command-line-tools](https://www.nordicsemi.com/Products/Development-tools/nrf-command-line-tools/download)
 
@@ -15,6 +16,13 @@ Set Zephyr dev env by
 ```
 source ./zephyr.env
 ```
+
+Have tried 3 STM32 boards as controllers:
+- nucleo_f401re
+- nucleo_g0b1re
+- nucleo_l476rg (doesn't work with nRF controller)
+
+The all work well, except `nucleo_l476rg` works only with x_nucleo_idb05a2 shield. It doesn't want to work with nRF controller. There must be some place where BLUNRG config options is set for entire board. Need to find out where.
 
 STM32 Nucleo F401R Host with STM X-NUCLEO IDB05A2
 ----------------------------------------------
