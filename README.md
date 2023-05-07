@@ -63,3 +63,9 @@ Clean
 ```
 rm -rf host_build ctrl_build
 ```
+
+
+TODO
+----------------------------------------------
+
+For some reason Host is always repeating logs entries twice
