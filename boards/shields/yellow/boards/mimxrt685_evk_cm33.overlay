@@ -1,0 +1,33 @@
+&pinctrl {
+    pinmux_flexcomm5_spi: pinmux_flexcomm5_spi {
+        group0 {
+            pinmux = <FC5_SCK_PIO1_3>,
+                     <FC5_TXD_SCL_MISO_WS_PIO1_4>,
+                     <FC5_RXD_SDA_MOSI_DATA_PIO1_5>,
+                     <FC5_CTS_SDA_SSEL0_PIO1_6>;
+            slew-rate = "slow";
+            drive-strength = "high";
+        };
+    };
+};
+
+&arduino_spi {
+    cs-gpios = <&arduino_header 1 (GPIO_ACTIVE_LOW)>;          /* A1 */
+    pinctrl-0 = <&pinmux_flexcomm5_spi>;
+    //pre-delay = <1000>;
+    //post-delay = <1000>;
+    //frame-delay = <1000>;
+    transfer-delay = <1000>;
+
+    // /delete-property/ dmas;
+    // /delete-property/ dma-names;
+
+    spbtle-rf@0 {
+        compatible = "zephyr,bt-hci-spi";
+        reg = <0>;
+        reset-gpios = <&arduino_header 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* D6 */
+        //reset-assert-duration-ms = <500>;
+        irq-gpios = <&arduino_header 14 (GPIO_ACTIVE_HIGH)>;  /* D8 */
+        spi-max-frequency = <500000>;
+    };
+};
