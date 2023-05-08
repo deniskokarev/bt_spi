@@ -69,6 +69,8 @@ west flash -d ctrl_build
 NXP RT685 EVK Host with nRF52840DK Controller
 ----------------------------------------------
 
+It works!!!
+
 **NB!** must switch JP12 pin to enable 3.3V output [MIMXRT685 EVK User Guide](https://www.mouser.com/pdfDocs/NXP_MIMXRT685-EVK_UG.pdf)
 
 
