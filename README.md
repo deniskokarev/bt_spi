@@ -1,7 +1,24 @@
 Experiments with Host and BT controller boards over SPI
 ==============================================
 
-Install Zephyr as per [Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html)
+This is an experiment of using few boards as BT Hosts:
+- nucleo_f401re
+- nucleo_g0b1re
+- nucleo_l476rg
+- mimxrt685_evk_cm33
+
+and 2 boards as BT Controllers:
+- x_nucleo_idb05a2 (shield)
+- nrf52840dk_nrf52840
+
+connected over SPI
+
+
+*All STM32 boards work well, except `nucleo_l476rg` works only with x_nucleo_idb05a2 shield. It doesn't want to work with nRF controller. There must be some place where BLUNRG config options is set for entire board. Need to find out where*
+
+--------------------
+
+In order to proceed install Zephyr as per [Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html)
 using virtual env.
 
 Install necessary dependencies, such as
@@ -17,17 +34,11 @@ Set Zephyr dev env by
 source ./zephyr.env
 ```
 
-Have tried 3 STM32 boards as controllers:
-- nucleo_f401re
-- nucleo_g0b1re
-- nucleo_l476rg (doesn't work with nRF controller)
-
-The all work well, except `nucleo_l476rg` works only with x_nucleo_idb05a2 shield. It doesn't want to work with nRF controller. There must be some place where BLUNRG config options is set for entire board. Need to find out where.
-
 STM32 Nucleo F401R Host with STM X-NUCLEO IDB05A2
 ----------------------------------------------
 
-# Host with shield
+### Host with shield
+
 Build
 
 ```
@@ -42,7 +53,8 @@ west flash -d host_build
 STM32 Nucleo F401R Host with nRF52840DK Controller
 ----------------------------------------------
 
-# Host
+### Host
+
 Build perepheral_dis host example
 
 ```
@@ -54,7 +66,8 @@ Flash
 west flash -d host_build
 ```
 
-# Controller
+### Controller
+
 Build hci_spi controller example
 
 ```
@@ -74,7 +87,8 @@ It works!!!
 **NB!** must switch JP12 pin to enable 3.3V output [MIMXRT685 EVK User Guide](https://www.mouser.com/pdfDocs/NXP_MIMXRT685-EVK_UG.pdf)
 
 
-# Host
+### Host
+
 Build perepheral_dis host example
 
 ```
@@ -97,19 +111,41 @@ rm -rf host_build ctrl_build
 Pinout
 ----------------------------------------------
 
-Pinout almost identical between host and controller
+Pinout is almost identical between stm host, shield and nrf controller.
 
-STM Host
-```
-(A0)  PA0   EXTI		active Hi
-(A1)  PA1   SPI CS		active Lo
-(D12) PA6   MISO		active Hi
-(D11) PA7   MOSI		active Hi
-(D6)  PB10  RESET		active Lo
-(D3)  PB3   SPI-SCK		active Hi
-```
+- CTRL RESET is sent from host to reset the controller
+- EXTI is raised when controller has data for host
+- 4 SPI wires as usual
 
-Only nRF Controller has an extra wire from (D6) to P0.18 reset pin
+
+**The STM host and nRF controller pinouts are covered by `yellow` shield under `boards`**
+
+**Also matches `x_nucleo_idb05a2` shield**
+
+|  Function  | Arduino Pin | STM32 Pin  | Active Polarity |
+|------------|-------------|------------|-----------------|
+| CTRL RESET | D7          | PA8        | Lo              |
+| EXTI       | A0          | PA0        | Hi              |
+| SPI-CS     | A1          | PA1        | Lo              |
+| SPI-MISO   | D12         | PA6        | Hi              |
+| SPI-MOSI   | D11         | PA7        | Hi              |
+| SPI-CLK    | D3          | PB3        | Hi              |
+
+
+nrf52840dk_nrf52840 has the same pinout, except extra D7 -> P0.18 reset pin
+
+
+**mimxrt685_evk_cm33 host pinout is covered by `red` shield under `boards`**
+
+|  Function  | Arduino Pin | RT685 pin     |
+|------------|-------------|---------------|
+| CTRL RESET | D7          | P1_8          |
+| EXTI       | D8          | P1_9          | 
+| SPI-CS     | D10         | P1_6_SPI_SSO  |
+| SPI-MISO   | D12         | P1_5_SPI_MISO |
+| SPI-MOSI   | D11         | P1_4_SPI_MOSI |
+| SPI-CLK    | D13         | P1_3_SPI_CLK  |
+
 
 Debug
 ----------------------------------------------
@@ -159,5 +195,6 @@ Then use the launch.json entry similar to this:
 
 TODO
 ----------------------------------------------
+
 
 For some reason Host is always repeating logs entries twice
