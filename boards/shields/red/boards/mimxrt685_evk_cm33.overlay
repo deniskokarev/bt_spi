@@ -25,7 +25,7 @@
     spbtle-rf@0 {
         compatible = "zephyr,bt-hci-spi";
         reg = <0>;
-        reset-gpios = <&arduino_header 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* D6 */
+        reset-gpios = <&arduino_header 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* D7 */
         //reset-assert-duration-ms = <500>;
         irq-gpios = <&arduino_header 14 (GPIO_ACTIVE_HIGH)>;  /* D8 */
         spi-max-frequency = <500000>;
