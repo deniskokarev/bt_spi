@@ -21,6 +21,16 @@ connected over SPI
 In order to proceed install Zephyr as per [Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html)
 using virtual env.
 
+**NB!!! it is very important to use `v3.3-branch`**
+
+After `west init` make sure to do
+- `cd ~/zephyrproject`
+- `git switch v3.3-branch`
+- `west update`
+
+The `main` is known to have problems with GPIO/SPI
+
+
 Install necessary dependencies, such as
 ```
 brew install stlink
