@@ -94,6 +94,14 @@ NXP RT685 EVK Host with nRF52840DK Controller
 
 It works!!!
 
+**NB!** in order to use JLink programmer use LCPScrypt to reflash from CMSIS-DAP to JLink. [Download from NXP](https://www.nxp.com/products/processors-and-microcontrollers/arm-microcontrollers/general-purpose-mcus/lpc4300-arm-cortex-m4-m0/lpcscrypt-v2-1-2:LPCSCRYPT) and unpack.
+
+Connect JP1 and power cycle to place LPC43xx into DFU mode. Then from `scripts` run:
+```
+./program_JLINK
+```
+*(I had to flash twice - first time it's given me Verify Error 0xb 0x1a000d20)*
+
 **NB!** must switch JP12 pin to enable 3.3V output [MIMXRT685 EVK User Guide](https://www.mouser.com/pdfDocs/NXP_MIMXRT685-EVK_UG.pdf)
 
 
